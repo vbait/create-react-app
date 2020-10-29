@@ -1,0 +1,8 @@
+*.min.*
+build
+.out
+.eslintrc.json
+dll
+**/static
+**/assets
+**/.env
