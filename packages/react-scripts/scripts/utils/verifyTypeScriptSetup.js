@@ -156,6 +156,7 @@ function verifyTypeScriptSetup() {
           : 'react',
       reason: 'to support the new JSX transform in React 17',
     },
+    typeRoots: { value: ['node_modules/@types'] },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
 
