@@ -129,6 +129,7 @@ function verifyTypeScriptSetup() {
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
     noFallthroughCasesInSwitch: { suggested: true },
+    typeRoots: { suggested: ['node_modules/@types'] },
 
     // These values are required and cannot be changed by the user
     // Keep this in sync with the webpack config
@@ -156,7 +157,6 @@ function verifyTypeScriptSetup() {
           : 'react',
       reason: 'to support the new JSX transform in React 17',
     },
-    typeRoots: { value: ['node_modules/@types'] },
     paths: { value: undefined, reason: 'aliased imports are not supported' },
   };
 
@@ -285,7 +285,7 @@ function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
+      `/// <reference types="@vbait/react-scripts" />${os.EOL}`
     );
   }
 }
