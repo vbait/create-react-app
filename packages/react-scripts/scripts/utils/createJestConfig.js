@@ -38,9 +38,10 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
       '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
-    testEnvironment: 'jsdom',
+    testEnvironment: 'jest-environment-jsdom-sixteen',
     testRunner: require.resolve('jest-circus/runner'),
     transform: {
+      '\\.(gql|graphql)$': require.resolve('jest-transform-graphql'),
       '^.+\\.(js|jsx|mjs|cjs|ts|tsx)$': isEjecting
         ? '<rootDir>/node_modules/babel-jest'
         : resolve('config/jest/babelTransform.js'),
@@ -55,6 +56,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     ],
     modulePaths: modules.additionalModulePaths || [],
     moduleNameMapper: {
+      '@/(.*)$': '<rootDir>/src/$1',
       '^react-native$': 'react-native-web',
       '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
       ...(modules.jestAliases || {}),
