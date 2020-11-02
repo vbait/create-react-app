@@ -3,6 +3,8 @@ build
 .out
 .eslintrc.json
 dll
+__generated__
+src/graphql/types.ts
 **/static
 **/assets
 **/.env

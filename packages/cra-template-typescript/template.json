@@ -1,6 +1,12 @@
 {
   "package": {
     "dependencies": {
+      "@apollo/client": "^3.2.5",
+      "@graphql-codegen/cli": "^1.19.0",
+      "@graphql-codegen/near-operation-file-preset": "^1.17.11",
+      "@graphql-codegen/typescript": "^1.17.11",
+      "@graphql-codegen/typescript-operations": "^1.17.8",
+      "@graphql-codegen/typescript-react-apollo": "^2.0.7",
       "@testing-library/jest-dom": "^5.11.4",
       "@testing-library/react": "^11.1.0",
       "@testing-library/user-event": "^12.1.10",
@@ -8,6 +14,7 @@
       "@types/react": "^16.9.53",
       "@types/react-dom": "^16.9.8",
       "@types/jest": "^26.0.15",
+      "apollo": "^2.31.0",
       "typescript": "^4.0.3",
       "web-vitals": "^0.2.4",
       "eslint-config-airbnb": "^18.2.0",
@@ -18,6 +25,14 @@
     },
     "eslintConfig": {
       "extends": ["react-app", "react-app/jest"]
+    },
+    "scripts": {
+      "lint": "./node_modules/.bin/eslint --ext .js --ext .jsx --ext .ts --ext .tsx src",
+      "lint:fix": "npm run lint --fix",
+      "format": "./node_modules/.bin/prettier \"src/**/*.{js,jsx,ts,tsx,json}\" --write",
+      "gql:schema:download": "apollo schema:download --endpoint=http://swapi.apis.guru/ src/graphql/schema.json",
+      "gql:codegen": "graphql-codegen --config ./src/graphql/codegen.yml",
+      "gql:faker": "graphql-faker ./src/graphql/schema.graphql --open"
     }
   }
 }

@@ -1,0 +1,36 @@
+schema {
+  query: Root
+}
+
+type Root {
+  allFilms(after: String, first: Int, before: String, last: Int): FilmsConnection
+}
+
+type FilmsConnection {
+  pageInfo: PageInfo!
+  edges: [FilmsEdge]
+  totalCount: Int
+  films: [Film]
+}
+
+type FilmsEdge {
+  node: Film
+  cursor: String!
+}
+
+type Film {
+  id: ID! @fake(type: uuid)
+  title: String @fake(type: productName)
+  episodeID: Int @fake(type: number)
+  director: String @fake(type: fullName)
+  producers: [String] @fake(type: fullName)
+  releaseDate: String @fake(type: futureDate)
+  created: String @fake(type: pastDate)
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
