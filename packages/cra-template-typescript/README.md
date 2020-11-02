@@ -1,17 +1,17 @@
-# cra-template-ab-typescript-demo
+# cra-template-ab-typescript
 
 This is the TypeScript template for [Create React App](https://github.com/facebook/create-react-app).
 
-To use this template, add `--template ab-typescript-demo` when creating a new app.
+To use this template, add `--template ab-typescript` when creating a new app.
 
 For example:
 
 ```sh
-npx create-react-app my-app --template ab-typescript-demo
+npx create-react-app my-app --template ab-typescript
 
 # or
 
-yarn create react-app my-app --template ab-typescript-demo
+yarn create react-app my-app --template ab-typescript
 ```
 
 For more information, please refer to:
