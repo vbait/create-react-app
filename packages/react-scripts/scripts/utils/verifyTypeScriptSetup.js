@@ -129,7 +129,7 @@ function verifyTypeScriptSetup() {
     strict: { suggested: true },
     forceConsistentCasingInFileNames: { suggested: true },
     noFallthroughCasesInSwitch: { suggested: true },
-    typeRoots: { suggested: ['node_modules/@types'] },
+    typeRoots: { suggested: ['node_modules/@types', 'src/custom.d.ts'] },
     paths: {
       suggested: {
         '@/*': ['./*'],

@@ -4,7 +4,7 @@ import client from './graphql/client';
 import { useAllFilmsQuery } from './graphql/query/__generated__/allFilms';
 import { Film } from './graphql/types';
 import logo from './logo.svg';
-import './App.scss';
+import './App.css';
 
 function App() {
   const { loading, data, error } = useAllFilmsQuery({
