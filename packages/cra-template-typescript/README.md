@@ -26,7 +26,7 @@ We use two libraries for graphql (read how to install them):
 - [graphql-codegen](https://graphql-code-generator.com/docs/getting-started/installation)
 - [graphql-faker](https://github.com/APIs-guru/graphql-faker)
 
-### Scripts
+## Scripts
 
 Download schema from your endpoint and save it in src/graphql/schema.json
 
@@ -45,3 +45,7 @@ If you want to run fake API then:
 ```sh
 yarn gql:faker
 ```
+
+### Issues
+
+Sometimes if you run the app you can see issues with babel. Try remove _node_modules_ and _yarn.lock_ and install it again
