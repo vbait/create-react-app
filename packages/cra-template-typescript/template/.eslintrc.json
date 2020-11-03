@@ -6,23 +6,16 @@
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "import",
-    "react-hooks"
-  ],
+  "plugins": ["react", "jsx-a11y", "import", "react-hooks"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
-    "react/jsx-filename-extension": [
-      1,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "import/extensions": "off",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "import/no-unresolved": "error"
   },
   "settings": {
     "import/parser": {
