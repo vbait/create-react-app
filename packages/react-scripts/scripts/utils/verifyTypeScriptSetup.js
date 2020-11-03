@@ -130,11 +130,6 @@ function verifyTypeScriptSetup() {
     forceConsistentCasingInFileNames: { suggested: true },
     noFallthroughCasesInSwitch: { suggested: true },
     typeRoots: { suggested: ['node_modules/@types', 'src/custom.d.ts'] },
-    paths: {
-      suggested: {
-        '@/*': ['./*'],
-      },
-    },
 
     // These values are required and cannot be changed by the user
     // Keep this in sync with the webpack config
