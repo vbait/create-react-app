@@ -1,3 +1,8 @@
+/*
+  Add these lines if you want to support IE11
+  import 'core-js/stable';
+  import 'isomorphic-unfetch'; // for apollo client
+*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
