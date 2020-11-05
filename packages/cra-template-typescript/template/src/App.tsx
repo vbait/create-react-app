@@ -18,14 +18,17 @@ function App() {
   const films: Film[] = (data?.allFilms?.films || []) as Film[];
 
   return (
-    <div className="App" data-testid="app-header">
-      <ul>
-        {films.map((film: Film) => (
-          <li key={film.id} style={{ textAlign: 'left' }}>
-            {film.title} ({film.episodeID})
-          </li>
-        ))}
-      </ul>
+    <div className="App">
+      {!films.length && <div>No Films</div>}
+      {films.length && (
+        <ul data-testid="films-list">
+          {films.map((film: Film) => (
+            <li key={film.id} style={{ textAlign: 'left' }}>
+              {film.title} ({film.episodeID})
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
