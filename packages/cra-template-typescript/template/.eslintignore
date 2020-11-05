@@ -1,3 +1,4 @@
 public
 __generated__
 src/graphql/types.ts
+src/graphql/query

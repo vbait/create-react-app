@@ -11,7 +11,7 @@ generates:
     presetConfig:
       extension: .tsx
       baseTypesPath: types.ts
-      folder: __generated__
+      # folder: __generated__
     plugins:
       - typescript-operations
       - typescript-react-apollo

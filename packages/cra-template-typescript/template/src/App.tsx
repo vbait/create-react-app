@@ -1,15 +1,11 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import client from './graphql/client';
-import { useAllFilmsQuery } from './graphql/query/__generated__/allFilms';
+import { useAllFilmsQuery } from './graphql/query/AllFilms';
 import { Film } from './graphql/types';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
-  const { loading, data, error } = useAllFilmsQuery({
-    variables: {},
-  });
+  const { loading, data, error } = useAllFilmsQuery();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -22,17 +18,14 @@ function App() {
   const films: Film[] = (data?.allFilms?.films || []) as Film[];
 
   return (
-    <div className="App">
-      <header className="App-header" data-testid="app-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ul>
-          {films.map((film: Film) => (
-            <li key={film.id} style={{ textAlign: 'left' }}>
-              {film.title} ({film.episodeID})
-            </li>
-          ))}
-        </ul>
-      </header>
+    <div className="App" data-testid="app-header">
+      <ul>
+        {films.map((film: Film) => (
+          <li key={film.id} style={{ textAlign: 'left' }}>
+            {film.title} ({film.episodeID})
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -42,3 +35,5 @@ export default () => (
     <App />
   </ApolloProvider>
 );
+
+export { App };
