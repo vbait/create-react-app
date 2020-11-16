@@ -1,6 +1,6 @@
 {
   "name": "@vbait/react-scripts",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -55,6 +55,7 @@
     "eslint-plugin-testing-library": "^3.9.2",
     "eslint-webpack-plugin": "^2.1.0",
     "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
     "file-loader": "6.1.1",
     "fs-extra": "^9.0.1",
     "html-webpack-plugin": "4.5.0",

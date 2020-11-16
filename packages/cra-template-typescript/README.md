@@ -21,8 +21,9 @@ For more information, please refer to:
 
 # How to use
 
-We use two libraries for graphql (read how to install them):
+We use three libraries for graphql (read how to install them):
 
+- [graphqurl](https://github.com/hasura/graphqurl)
 - [graphql-codegen](https://graphql-code-generator.com/docs/getting-started/installation)
 - [graphql-faker](https://github.com/APIs-guru/graphql-faker)
 

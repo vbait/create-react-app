@@ -31,7 +31,7 @@
       "lint": "./node_modules/.bin/eslint --ext .js --ext .jsx --ext .ts --ext .tsx src",
       "lint:fix": "npm run lint --fix",
       "format": "./node_modules/.bin/prettier \"src/**/*.{js,jsx,ts,tsx,json}\" --write",
-      "gql:schema:download": "apollo schema:download --endpoint=http://swapi.apis.guru/ src/graphql/schema.json",
+      "gql:schema:download": "gq http://swapi.apis.guru/ --introspect > src/graphql/schema.generated.graphql",
       "gql:codegen": "graphql-codegen --config ./src/graphql/codegen.yml",
       "gql:faker": "graphql-faker ./src/graphql/schema.graphql --open"
     }
