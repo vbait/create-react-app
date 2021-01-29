@@ -10,4 +10,7 @@ Please refer to its documentation:
 
 - OPTIMIZATION_CHUNK - **'all'** by default
 - USE_CONTENTHASH - **true** by default
+- USE_MANIFEST - **true** by default
 - CHUNK_FILENAME - **'.chunk'** by default
+- ASSETS_PATH - **'static/'** by default
+- GENERATE_HTML - **true** by default

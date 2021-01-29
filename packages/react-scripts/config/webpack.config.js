@@ -56,10 +56,18 @@ const reactRefreshOverlayEntry = require.resolve(
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 const optimizationChunk = process.env.OPTIMIZATION_CHUNK || 'all';
 const shouldUseContentHash = process.env.USE_CONTENTHASH !== 'false';
+const shouldUseManifest = process.env.USE_MANIFEST !== 'false';
+const shouldGenerateHtml = process.env.GENERATE_HTML !== 'false';
 const chunkFilename =
   typeof process.env.CHUNK_FILENAME === 'string'
     ? process.env.CHUNK_FILENAME
     : '.chunk';
+
+// assets start path
+const assetsPath =
+  typeof process.env.ASSETS_PATH === 'string'
+    ? process.env.ASSETS_PATH
+    : 'static/';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
@@ -118,7 +126,7 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        // css is located in `static/css`, use '../../' to locate index.html folder
+        // css is located in `${assetsPath}css`, use '../../' to locate index.html folder
         // in production `paths.publicUrlOrPath` can be a relative path
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
@@ -220,16 +228,18 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? `static/js/[name]${shouldUseContentHash ? '.[contenthash:8]' : ''}.js`
-        : isEnvDevelopment && 'static/js/bundle.js',
+        ? `${assetsPath}js/[name]${
+            shouldUseContentHash ? '.[contenthash:8]' : ''
+          }.js`
+        : isEnvDevelopment && `${assetsPath}js/bundle.js`,
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? `static/js/[name]${
+        ? `${assetsPath}js/[name]${
             shouldUseContentHash ? '.[contenthash:8]' : ''
           }${chunkFilename}.js`
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
+        : isEnvDevelopment && `${assetsPath}js/[name].chunk.js`,
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -396,7 +406,7 @@ module.exports = function (webpackEnv) {
               options: {
                 limit: imageInlineSizeLimit,
                 mimetype: 'image/avif',
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: `${assetsPath}media/[name].[hash:8].[ext]`,
               },
             },
             // "url" loader works like "file" loader except that it embeds assets
@@ -407,7 +417,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: `${assetsPath}media/[name].[hash:8].[ext]`,
               },
             },
             // graphql loader
@@ -609,7 +619,7 @@ module.exports = function (webpackEnv) {
                 /\.(graphql|gql)$/,
               ],
               options: {
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: `${assetsPath}media/[name].[hash:8].[ext]`,
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -620,35 +630,37 @@ module.exports = function (webpackEnv) {
     },
     plugins: [
       // Generates an `index.html` file with the <script> injected.
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            template: paths.appHtml,
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
+      (shouldGenerateHtml || isEnvDevelopment) &&
+        new HtmlWebpackPlugin(
+          Object.assign(
+            {},
+            {
+              inject: true,
+              template: paths.appHtml,
+            },
+            isEnvProduction
+              ? {
+                  minify: {
+                    removeComments: true,
+                    collapseWhitespace: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeStyleLinkTypeAttributes: true,
+                    keepClosingSlash: true,
+                    minifyJS: true,
+                    minifyCSS: true,
+                    minifyURLs: true,
+                  },
+                }
+              : undefined
+          )
+        ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
       isEnvProduction &&
+        shouldGenerateHtml &&
         shouldInlineRuntimeChunk &&
         new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       // Makes some environment variables available in index.html.
@@ -697,10 +709,10 @@ module.exports = function (webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: `static/css/[name]${
+          filename: `${assetsPath}css/[name]${
             shouldUseContentHash ? '.[contenthash:8]' : ''
           }.css`,
-          chunkFilename: `static/css/[name]${
+          chunkFilename: `${assetsPath}css/[name]${
             shouldUseContentHash ? '.[contenthash:8]' : ''
           }${chunkFilename}.css`,
         }),
@@ -710,24 +722,25 @@ module.exports = function (webpackEnv) {
       //   `index.html`
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json',
-        publicPath: paths.publicUrlOrPath,
-        generate: (seed, files, entrypoints) => {
-          const manifestFiles = files.reduce((manifest, file) => {
-            manifest[file.name] = file.path;
-            return manifest;
-          }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            fileName => !fileName.endsWith('.map')
-          );
+      shouldUseManifest &&
+        new ManifestPlugin({
+          fileName: 'asset-manifest.json',
+          publicPath: paths.publicUrlOrPath,
+          generate: (seed, files, entrypoints) => {
+            const manifestFiles = files.reduce((manifest, file) => {
+              manifest[file.name] = file.path;
+              return manifest;
+            }, seed);
+            const entrypointFiles = entrypoints.main.filter(
+              fileName => !fileName.endsWith('.map')
+            );
 
-          return {
-            files: manifestFiles,
-            entrypoints: entrypointFiles,
-          };
-        },
-      }),
+            return {
+              files: manifestFiles,
+              entrypoints: entrypointFiles,
+            };
+          },
+        }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.
