@@ -14,3 +14,7 @@ Please refer to its documentation:
 - CHUNK_FILENAME - **'.chunk'** by default
 - ASSETS_PATH - **'static/'** by default
 - GENERATE_HTML - **true** by default
+
+### How to use
+
+`npx create-react-app my-app --scripts-version @vbait/react-scripts --template cra-template-ab-typescript`
