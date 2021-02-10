@@ -56,6 +56,7 @@ const reactRefreshOverlayEntry = require.resolve(
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 const optimizationChunk = process.env.OPTIMIZATION_CHUNK || 'all';
 const shouldUseContentHash = process.env.USE_CONTENTHASH !== 'false';
+const shouldUseChunkContentHash = process.env.USE_CHUNK_CONTENTHASH !== 'false';
 const shouldUseManifest = process.env.USE_MANIFEST !== 'false';
 const shouldGenerateHtml = process.env.GENERATE_HTML !== 'false';
 const chunkFilename =
@@ -237,7 +238,7 @@ module.exports = function (webpackEnv) {
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? `${assetsPath}js/[name]${
-            shouldUseContentHash ? '.[contenthash:8]' : ''
+            shouldUseChunkContentHash ? '.[contenthash:8]' : ''
           }${chunkFilename}.js`
         : isEnvDevelopment && `${assetsPath}js/[name].chunk.js`,
       // webpack uses `publicPath` to determine where the app is being served from.
@@ -713,7 +714,7 @@ module.exports = function (webpackEnv) {
             shouldUseContentHash ? '.[contenthash:8]' : ''
           }.css`,
           chunkFilename: `${assetsPath}css/[name]${
-            shouldUseContentHash ? '.[contenthash:8]' : ''
+            shouldUseChunkContentHash ? '.[contenthash:8]' : ''
           }${chunkFilename}.css`,
         }),
       // Generate an asset manifest file with the following content:
