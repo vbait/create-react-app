@@ -59,6 +59,8 @@ const shouldUseContentHash = process.env.USE_CONTENTHASH !== 'false';
 const shouldUseChunkContentHash = process.env.USE_CHUNK_CONTENTHASH !== 'false';
 const shouldUseManifest = process.env.USE_MANIFEST !== 'false';
 const shouldGenerateHtml = process.env.GENERATE_HTML !== 'false';
+const shouldCreateRuntimeChunk =
+  process.env.OPTIMIZATION_RUNTIME_CHUNK !== 'false';
 const chunkFilename =
   typeof process.env.CHUNK_FILENAME === 'string'
     ? process.env.CHUNK_FILENAME
@@ -334,9 +336,11 @@ module.exports = function (webpackEnv) {
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       // https://github.com/facebook/create-react-app/issues/5358
-      runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
-      },
+      runtimeChunk: shouldCreateRuntimeChunk
+        ? {
+            name: entrypoint => `runtime-${entrypoint.name}`,
+          }
+        : false,
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
