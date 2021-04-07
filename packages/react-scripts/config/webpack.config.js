@@ -872,6 +872,7 @@ module.exports = function (webpackEnv) {
       plugins: {
         MiniCssExtractPlugin,
         ESLintPlugin,
+        HtmlWebpackPlugin,
       },
     });
   }
