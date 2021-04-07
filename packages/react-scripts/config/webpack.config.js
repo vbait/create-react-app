@@ -85,6 +85,9 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 // Get the path to the uncompiled service worker (if it exists).
 const swSrc = paths.swSrc;
 
+// Check if webpack extend file is presented
+const useExtendedWebpackConfig = fs.existsSync(paths.webpackExtendConfig);
+
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -191,7 +194,7 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  return {
+  const webpackConfig = {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -842,4 +845,35 @@ module.exports = function (webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
   };
+
+  if (useExtendedWebpackConfig) {
+    return require(paths.webpackExtendConfig)(webpackConfig, {
+      webpack,
+      isEnvDevelopment,
+      isEnvProduction,
+      useTypeScript,
+      useTailwind,
+      hasJsxRuntime,
+      assetsPath,
+      appPackageJson,
+      paths,
+      // extra
+      webpackDevClientEntry,
+      imageInlineSizeLimit,
+      shouldInlineRuntimeChunk,
+      optimizationChunk,
+      shouldUseContentHash,
+      shouldUseChunkContentHash,
+      shouldUseManifest,
+      shouldGenerateHtml,
+      shouldCreateRuntimeChunk,
+      shouldUseReactRefresh,
+      // plugins
+      plugins: {
+        MiniCssExtractPlugin,
+        ESLintPlugin,
+      },
+    });
+  }
+  return webpackConfig;
 };

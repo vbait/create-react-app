@@ -1,6 +1,6 @@
 {
   "name": "@vbait/react-scripts",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
