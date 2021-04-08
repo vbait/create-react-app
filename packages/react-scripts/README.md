@@ -17,6 +17,52 @@ Please refer to its documentation:
 - GENERATE_HTML: `boolean` - **true** by default
 - OPTIMIZATION_RUNTIME_CHUNK: `boolean` - `runtime-${entrypoint.name}` by default if `true`
 
+If it isn't enough then you can extend your webpack config with file
+`<root>/webpack.extend.js`
+
+How to use it:
+
+```js
+module.exports = (config, options) => {
+  // change or create new config here
+  return config;
+};
+```
+
+Options:
+
+```js
+const options = {
+  webpack,
+  isEnvDevelopment,
+  isEnvProduction,
+  useTypeScript,
+  useTailwind,
+  hasJsxRuntime,
+  assetsPath,
+  appPackageJson,
+  paths,
+  // extra
+  chunkFilename,
+  webpackDevClientEntry,
+  imageInlineSizeLimit,
+  shouldInlineRuntimeChunk,
+  optimizationChunk,
+  shouldUseContentHash,
+  shouldUseChunkContentHash,
+  shouldUseManifest,
+  shouldGenerateHtml,
+  shouldCreateRuntimeChunk,
+  shouldUseReactRefresh,
+  // plugins
+  plugins: {
+    MiniCssExtractPlugin,
+    ESLintPlugin,
+    HtmlWebpackPlugin,
+  },
+};
+```
+
 ### How to use
 
 `npx create-react-app my-app --scripts-version @vbait/react-scripts --template cra-template-ab-typescript`

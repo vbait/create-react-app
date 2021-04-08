@@ -858,6 +858,7 @@ module.exports = function (webpackEnv) {
       appPackageJson,
       paths,
       // extra
+      chunkFilename,
       webpackDevClientEntry,
       imageInlineSizeLimit,
       shouldInlineRuntimeChunk,
